@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입 - COMMUNITY</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/member/join.css}" />
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script defer type="module" th:src="@{/js/member/join.js}"></script>
+  </head>
+  <body>
+  <header class="header" th:include="~{fragments/header::header}">
+    <!-- header.html 내용 -->
+  </header>
+
+    <main>
+      <div class="container">
+        <div class="join-wrapper">
+          <h2 class="join-title">회원가입</h2>
+          <form class="join-form" th:action="@{/member/join}" method="post">
+            <div class="input-group">
+              <label for="loginId" class="input-label">아이디</label>
+              <input type="text" id="loginId" name="loginId" class="input-field" placeholder="아이디를 입력하세요" required />
+              <span class="input-notice">* 영문, 숫자 조합 6~12자</span>
+            </div>
+
+            <div class="input-group">
+              <label for="password" class="input-label">비밀번호</label>
+              <input type="password" id="password" name="password" class="input-field" placeholder="비밀번호를 입력하세요" required />
+              <span class="input-notice">* 영문, 숫자, 특수문자 조합 8~16자</span>
+            </div>
+
+            <div class="input-group">
+              <label for="passwordCheck" class="input-label">비밀번호 확인</label>
+              <input type="password" id="passwordCheck" name="passwordCheck" class="input-field" placeholder="비밀번호를 다시 입력하세요" required />
+            </div>
+
+            <div class="input-group">
+              <label for="name" class="input-label">이름</label>
+              <input type="text" id="name" name="name" class="input-field" placeholder="이름을 입력하세요" required />
+            </div>
+
+            <div class="input-group">
+              <label for="email" class="input-label">이메일</label>
+              <input type="email" id="email" name="email" class="input-field" placeholder="이메일을 입력하세요" required />
+            </div>
+
+            <div class="input-group">
+              <label for="phone" class="input-label">휴대폰 번호</label>
+              <div class="input-with-btn">
+                <input type="tel" id="phone" name="phone" class="input-field" placeholder="휴대폰 번호를 입력하세요" required />
+                <button type="button" class="check-btn" id="sendAuthBtn">인증번호 전송</button>
+              </div>
+              <span class="input-notice">* '-' 없이 숫자만 입력해주세요</span>
+            </div>
+
+            <div class="input-group" id="authNumberGroup" style="display: none">
+              <label for="authNumber" class="input-label">인증번호</label>
+              <div class="input-with-btn">
+                <input type="text" id="authNumber" class="input-field" placeholder="인증번호 6자리를 입력하세요" maxlength="6" />
+                <button type="button" class="check-btn" id="verifyAuthBtn">인증확인</button>
+              </div>
+              <span class="timer" id="authTimer"></span>
+            </div>
+
+            <div class="input-group">
+              <label class="input-label">성별</label>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input type="radio" name="gender" value="M" required />
+                  <span>남성</span>
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="gender" value="F" />
+                  <span>여성</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="zipcode" class="input-label">우편번호</label>
+              <div class="input-with-btn">
+                <input type="text" id="zipcode" name="zipCode" class="input-field" placeholder="우편번호" readonly required />
+                <button type="button" class="check-btn" id="find-zipcode-btn">우편번호 찾기</button>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="address" class="input-label">주소</label>
+              <input type="text" id="address" name="address" class="input-field" placeholder="주소" readonly required />
+            </div>
+
+            <div class="input-group">
+              <label for="addressDetail" class="input-label">상세주소</label>
+              <input type="text" id="addressDetail" name="addressDetail" class="input-field" placeholder="상세주소를 입력하세요" />
+            </div>
+
+            <div class="btn-group">
+              <button type="submit" class="submit-btn">가입하기</button>
+              <button type="button" class="cancel-btn" onclick="history.back()">취소</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+
+  <footer class="footer" th:include="~{fragments/footer::footer}">
+    <!-- footer.html 내용 -->
+  </footer>
+  </body>
+</html>

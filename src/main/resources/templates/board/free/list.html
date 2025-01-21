@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>자유게시판 - COMMUNITY</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/board/free/list.css}" />
+    <script defer th:src="@{/js/board/free/list.js}"></script>
+  </head>
+  <body>
+  <header class="header" th:include="~{fragments/header::header}">
+    <!-- header.html 내용 -->
+  </header>
+
+    <main>
+      <div class="container">
+        <div class="board-wrapper">
+          <h2 class="board-title">자유게시판</h2>
+
+          <!-- 검색 영역 -->
+          <div class="search-area">
+            <form class="search-form" method="get" th:action="@{/board/free/list}">
+              <select name="searchType" class="search-select">
+                <option value="title" th:selected="${'title'.equals(searchDTO.searchType)}">제목</option>
+                <option value="content" th:selected="${'content'.equals(searchDTO.searchType)}">내용</option>
+                <option value="loginId" th:selected="${'loginId'.equals(searchDTO.searchType)}">작성자</option>
+              </select>
+              <div class="search-input-group">
+                <input type="text" name="keyword" th:value="${searchDTO.keyword}" class="search-input" placeholder="검색어를 입력하세요" />
+                <button type="submit" class="search-btn">검색</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- 글쓰기 버튼 영역 -->
+          <div class="write-area">
+            <a th:href="@{/board/free/write}" class="write-btn">글쓰기</a>
+          </div>
+
+          <!-- 게시글 목록 -->
+          <div class="board-list">
+            <!-- 게시글 항목 -->
+            <!-- boardList를 반복돌려준다!! -->
+            <div class="board-item" th:each="board : ${pageDTO.list}" th:object="${board}" >
+              <div class="thumbnail">
+                <!-- 이미지 나중에 처리함!-->
+                <img th:src="@{/image/board/300x200.png}" alt="게시글 썸네일" th:if="*{freeFileId == null}"/>
+                <img th:src="@{'/upload/free/'+ *{filePath} + '/th_' + *{uuid} + *{extension} }" alt="게시글 썸네일" th:unless="*{freeFileId == null}"/>
+              </div>
+              <div class="content">
+                <h3 class="title">
+                  <a th:href="@{/board/free/detail(freeBoardId= *{freeBoardId})}" th:text="*{title}">안녕하세요! 가입 인사드립니다.</a>
+                  <span class="comment-count" th:text="'['+ *{commentCount} +']'">[3]</span>
+                </h3>
+                <div class="meta">
+                  <span class="writer" th:text="*{loginId}">user123</span>
+                  <span class="date" th:text="*{regDate}">2024-01-10</span>
+                  <span class="view-count" th:text="'조회 ' + *{viewCount}">조회 42</span>
+                  <span class="like-count" th:text="'좋아요 ' + *{likeCount}">좋아요 5</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 페이지네이션 -->
+          <div class="pagination">
+            <a th:if="${pageDTO.hasPreviousGroup()}"
+               th:href="@{/board/free/list(page=${pageDTO.startPage - 1}, searchType=${searchDTO.searchType}, keyword=${searchDTO.keyword})}"
+               class="page-btn prev">&lt;</a>
+            <!-- 페이지 숫자 처리 -->
+            <!-- 타입리프가 제공하는 #numbers 를 사용-->
+            <!-- 타임리프에서는 #으로 변수를 가져올 수 있다.-->
+            <!-- th:classappend : 클래스 추가-->
+            <a th:each="i : ${#numbers.sequence(pageDTO.startPage, pageDTO.endPage)}"
+               th:href="@{/board/free/list(page=${i}, searchType=${searchDTO.searchType}, keyword=${searchDTO.keyword})}"
+               class="page-btn"
+               th:classappend="${i == pageDTO.page ? 'active' : ''}"
+               th:text="${i}"
+            >1</a>
+
+            <a th:if="${pageDTO.hasNextGroup()}"
+               th:href="@{/board/free/list(page=${pageDTO.endPage + 1}, searchType=${searchDTO.searchType}, keyword=${searchDTO.keyword})}"
+               class="page-btn next">&gt;</a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+  <footer class="footer" th:include="~{fragments/footer::footer}">
+    <!-- footer.html 내용 -->
+  </footer>
+  </body>
+</html>

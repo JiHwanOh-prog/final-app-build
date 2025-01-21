@@ -1,0 +1,224 @@
+/* Detail Section */
+.detail-section {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* Question Article */
+.question-article {
+  margin-bottom: 40px;
+}
+
+.post-header {
+  padding-bottom: 20px;
+  border-bottom: 2px solid #333;
+}
+
+.post-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.post-info {
+  display: flex;
+  gap: 15px;
+  font-size: 14px;
+  color: #666;
+}
+
+.writer {
+  font-weight: 500;
+}
+
+/* Post Content */
+.post-content {
+  padding: 30px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.content-text {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.image-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.image-item img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+/* Post Actions */
+.post-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.action-left {
+  display: flex;
+  gap: 10px;
+}
+
+/* Answer Section */
+.answer-section {
+  margin-top: 40px;
+}
+
+.answer-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Answer Form */
+.answer-form {
+  margin-bottom: 30px;
+}
+
+.answer-textarea {
+  width: 100%;
+  min-height: 150px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+  margin-bottom: 10px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Answer List */
+.answer-list {
+  list-style: none;
+  padding: 0;
+}
+
+.answer-item {
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.answer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.answer-info {
+  display: flex;
+  gap: 15px;
+  font-size: 14px;
+}
+
+.answer-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.answer-content {
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Buttons */
+.modify-btn,
+.delete-btn,
+.list-btn,
+.submit-btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.modify-btn {
+  background: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.delete-btn {
+  background: #fff;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+}
+
+.list-btn {
+  background: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.submit-btn {
+  background: #007bff;
+  color: #fff;
+  border: none;
+}
+
+.modify-btn:hover {
+  background: #f8f9fa;
+  border-color: #999;
+}
+
+.delete-btn:hover {
+  background: #dc3545;
+  color: #fff;
+}
+
+.list-btn:hover {
+  background: #f8f9fa;
+  border-color: #999;
+}
+
+.submit-btn:hover {
+  background: #0056b3;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .detail-section {
+    padding: 20px;
+  }
+
+  .post-info {
+    flex-wrap: wrap;
+  }
+
+  .image-list {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .post-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .action-left,
+  .action-right {
+    width: 100%;
+  }
+
+  .modify-btn,
+  .delete-btn,
+  .list-btn {
+    width: 100%;
+  }
+}

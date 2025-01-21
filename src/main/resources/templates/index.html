@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COMMUNITY</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}" />
+  </head>
+  <body>
+    <header class="header" th:include="~{fragments/header::header}">
+      <!-- header.html 내용 -->
+    </header>
+
+    <main>
+      <div class="container">
+        <div class="main-content">
+          <!-- 자유게시판 최신글 -->
+          <section class="board-section">
+            <div class="board-header">
+              <h2 class="board-title">자유게시판</h2>
+              <a href="/html/board/free/list.html" class="more-btn">더보기</a>
+            </div>
+            <ul class="card-list">
+              <!-- 반복 요소 시작 -->
+              <li class="card-item">
+                <a href="/html/board/free/detail.html">
+                  <div class="card-thumb">
+                    <img src="/image/board/300x200.png" alt="게시글 썸네일" />
+                  </div>
+                  <div class="card-info">
+                    <h3 class="card-title">자유게시판 최신글 제목입니다.</h3>
+                    <div class="card-meta">
+                      <span class="card-author">작성자</span>
+                      <span class="card-date">2024.03.14</span>
+                      <span class="card-likes">좋아요 10</span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <!-- 반복 요소 끝 -->
+
+              <!-- 샘플 데이터 시작 -->
+              <li class="card-item">
+                <a href="/html/board/free/detail.html">
+                  <div class="card-thumb">
+                    <img src="/image/board/300x200.png" alt="게시글 썸네일" />
+                  </div>
+                  <div class="card-info">
+                    <h3 class="card-title">두 번째 최신글 제목입니다.</h3>
+                    <div class="card-meta">
+                      <span class="card-author">작성자</span>
+                      <span class="card-date">2024.03.14</span>
+                      <span class="card-likes">좋아요 8</span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <!-- 추가 카드 2개 더 -->
+              <!-- 샘플 데이터 끝 -->
+            </ul>
+          </section>
+
+          <!-- QnA 최신글 -->
+          <section class="board-section">
+            <div class="board-header">
+              <h2 class="board-title">Q&A</h2>
+              <a href="/html/board/qna/list.html" class="more-btn">더보기</a>
+            </div>
+            <ul class="post-list">
+              <!-- 반복 요소 시작 -->
+              <li class="post-item">
+                <a href="/html/board/qna/detail.html">
+                  <div class="post-info">
+                    <h3 class="post-title">Spring Boot에서 JPA 연관관계 매핑 질문입니다.</h3>
+                    <div class="post-meta">
+                      <span class="post-author">김개발</span>
+                      <span class="post-date">2024.03.14</span>
+                      <span class="post-comments">답변 2</span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <!-- 반복 요소 끝 -->
+
+              <!-- 샘플 데이터 시작 -->
+              <li class="post-item">
+                <a href="/html/board/qna/detail.html">
+                  <div class="post-info">
+                    <h3 class="post-title">MyBatis에서 동적 쿼리 작성 방법 문의드립니다.</h3>
+                    <div class="post-meta">
+                      <span class="post-author">이코딩</span>
+                      <span class="post-date">2024.03.14</span>
+                      <span class="post-comments">답변 5</span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="post-item">
+                <a href="/html/board/qna/detail.html">
+                  <div class="post-info">
+                    <h3 class="post-title">타임리프 layout 설정 관련 질문입니다.</h3>
+                    <div class="post-meta">
+                      <span class="post-author">박프론트</span>
+                      <span class="post-date">2024.03.13</span>
+                      <span class="post-comments">답변 3</span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="post-item">
+                <a href="/html/board/qna/detail.html">
+                  <div class="post-info">
+                    <h3 class="post-title">Oracle DB 인덱스 관련해서 문의드립니다.</h3>
+                    <div class="post-meta">
+                      <span class="post-author">정디비</span>
+                      <span class="post-date">2024.03.13</span>
+                      <span class="post-comments">답변 1</span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="post-item">
+                <a href="/html/board/qna/detail.html">
+                  <div class="post-info">
+                    <h3 class="post-title">스프링 시큐리티 설정 질문입니다.</h3>
+                    <div class="post-meta">
+                      <span class="post-author">최보안</span>
+                      <span class="post-date">2024.03.13</span>
+                      <span class="post-comments">답변 4</span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <!-- 샘플 데이터 끝 -->
+            </ul>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer" th:include="~{fragments/footer::footer}">
+      <!-- footer.html 내용 -->
+    </footer>
+  </body>
+</html>

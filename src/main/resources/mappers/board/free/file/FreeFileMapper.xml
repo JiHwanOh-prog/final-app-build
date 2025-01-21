@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.finalapp.mapper.board.free.file.FreeFileMapper">
+    <insert id="insertFile" parameterType="FreeFileDTO">
+        <selectKey resultType="long" order="BEFORE" keyProperty="freeFileId">
+            SELECT SEQ_FREE_FILE.nextval FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_FREE_FILE(FREE_FILE_ID, FREE_BOARD_ID, ORIGINAL_FILENAME, UUID, FILE_PATH, EXTENSION)
+        VALUES (#{freeFileId}, #{freeBoardId}, #{originalFilename}, #{uuid}, #{filePath}, #{extension})
+    </insert>
+
+    <!-- 게시물에 속한 파일은 보통 게시물 번호로 조회
+     (게시글 상세를 눌렀을 때 해당 게시물과 관련된 이미지가 조회됨) -->
+    <!-- 자유게시판은 서비스 설계상 하나의 파일만 저장 가능함 (단건 조회만 가능함!!) -->
+    <select id="selectByBoardId" parameterType="long" resultType="FreeFileDTO">
+        SELECT FREE_FILE_ID, FREE_BOARD_ID, ORIGINAL_FILENAME, UUID, FILE_PATH, EXTENSION, REG_DATE
+        FROM TBL_FREE_FILE
+        WHERE FREE_BOARD_ID = #{freeBoardId}
+    </select>
+
+    <delete id="deleteByBoardId" parameterType="long">
+        DELETE FROM TBL_FREE_FILE
+        WHERE FREE_BOARD_ID = #{freeBoardId}
+    </delete>
+
+    <select id="selectOldFileList" resultType="FreeFileDTO">
+        SELECT FREE_FILE_ID, FREE_BOARD_ID, ORIGINAL_FILENAME, UUID, FILE_PATH, EXTENSION, REG_DATE
+        FROM TBL_FREE_FILE
+        WHERE FILE_PATH = TO_CHAR(SYSDATE-1, 'YYYY/MM/DD')
+    </select>
+</mapper>
+

@@ -1,0 +1,142 @@
+/* Header */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.header__wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__logo a {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  text-decoration: none;
+}
+
+.header__menu {
+  display: flex;
+  gap: 30px;
+}
+
+.header__menu-item a {
+  font-size: 15px;
+  color: #333;
+  text-decoration: none;
+  padding: 10px 0;
+  position: relative;
+}
+
+.header__menu-item a:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #007bff;
+  transition: width 0.3s;
+}
+
+.header__menu-item a:hover:after {
+  width: 100%;
+}
+
+.header__user {
+  display: flex;
+  gap: 10px;
+}
+
+.header__user a {
+  padding: 8px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.header__login-btn {
+  color: #007bff;
+  border: 1px solid #007bff;
+}
+
+.header__join-btn {
+  background: #007bff;
+  color: #fff;
+}
+
+.header__username {
+  font-size: 14px;
+  color: #333;
+  margin-right: 15px;
+}
+
+.header__mypage-btn {
+  padding: 8px 15px;
+  color: #007bff;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  margin-right: 10px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.header__logout-btn {
+  padding: 8px 15px;
+  background: #6c757d;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.header__logout-btn:hover {
+  background: #5a6268;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header__wrapper {
+    height: 60px;
+  }
+
+  .header__logo a {
+    font-size: 20px;
+  }
+
+  .header__menu {
+    gap: 15px;
+  }
+
+  .header__menu-item a {
+    font-size: 13px;
+  }
+
+  .header__user a {
+    padding: 6px 15px;
+    font-size: 13px;
+  }
+
+  .header__username {
+    font-size: 13px;
+    margin-right: 10px;
+  }
+
+  .header__mypage-btn,
+  .header__logout-btn {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}

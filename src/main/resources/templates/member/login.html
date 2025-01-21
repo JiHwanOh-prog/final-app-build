@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로그인 - COMMUNITY</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/member/login.css}" />
+    <script defer th:src="@{/js/member/login.js}"></script>
+  </head>
+  <body>
+  <header class="header" th:include="~{fragments/header::header}">
+    <!-- header.html 내용 -->
+  </header>
+
+    <main>
+      <div class="container">
+        <div class="login-wrapper">
+          <h2 class="login-title">로그인</h2>
+          <form class="login-form" th:action="@{/member/login}" method="post">
+            <div th:if="${hasError}" class="alert-danger">
+              <p th:text="${message}"></p>
+            </div>
+            <div class="input-group">
+              <label for="loginId" class="input-label">아이디</label>
+              <input type="text" id="loginId" name="loginId" class="input-field" placeholder="아이디를 입력하세요" required />
+            </div>
+
+            <div class="input-group">
+              <label for="password" class="input-label">비밀번호</label>
+              <input type="password" id="password" name="password" class="input-field" placeholder="비밀번호를 입력하세요" required />
+            </div>
+
+            <div class="login-options">
+              <label class="remember-me">
+                <input type="checkbox" name="remember" id="remember" />
+                <span>아이디 저장</span>
+              </label>
+              <div class="find-links">
+                <a href="#">아이디 찾기</a>
+                <span class="divider">|</span>
+                <a href="#">비밀번호 찾기</a>
+              </div>
+            </div>
+
+            <div class="btn-group">
+              <button type="submit" class="submit-btn">로그인</button>
+              <a th:href="@{/member/join}" class="join-btn">회원가입</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+
+  <footer class="footer" th:include="~{fragments/footer::footer}">
+    <!-- footer.html 내용 -->
+  </footer>
+  </body>
+</html>

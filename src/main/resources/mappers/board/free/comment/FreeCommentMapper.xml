@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.finalapp.mapper.board.free.comment.FreeCommentMapper">
+    <insert id="insertComment" parameterType="FreeCommentWriteDTO">
+        <selectKey resultType="long" order="BEFORE" keyProperty="freeCommentId">
+            SELECT SEQ_FREE_COMMENT.nextval FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_FREE_COMMENT(FREE_COMMENT_ID, FREE_BOARD_ID, MEMBER_ID, CONTENT)
+        VALUES (#{freeCommentId}, #{freeBoardId}, #{memberId}, #{content})
+    </insert>
+
+    <!-- 특정 게시판에 있는 댓글 조회 -->
+    <select id="selectListByBoardId" parameterType="long" resultType="FreeCommentListDTO">
+        SELECT FC.FREE_COMMENT_ID, FC.FREE_BOARD_ID, FC.CONTENT, FC.REG_DATE, FC.MOD_DATE,
+               M.MEMBER_ID, M.LOGIN_ID
+        FROM TBL_FREE_COMMENT FC
+            JOIN TBL_MEMBER M ON FC.MEMBER_ID = M.MEMBER_ID
+        WHERE FC.FREE_BOARD_ID = #{freeBoardId}
+        ORDER BY FC.FREE_COMMENT_ID DESC
+    </select>
+
+    <select id="selectTotalByBoardId" parameterType="long" resultType="_int">
+        SELECT COUNT(*)
+        FROM TBL_FREE_COMMENT
+        WHERE FREE_BOARD_ID = #{freeBoardId}
+    </select>
+
+    <update id="updateFreeComment" parameterType="FreeCommentModifyDTO">
+        UPDATE TBL_FREE_COMMENT
+        SET CONTENT = #{content}, MOD_DATE = SYSDATE
+        WHERE FREE_COMMENT_ID = #{freeCommentId}
+    </update>
+
+    <delete id="deleteByCommentId" parameterType="long">
+        DELETE FROM TBL_FREE_COMMENT
+        WHERE FREE_COMMENT_ID = #{freeCommentId}
+    </delete>
+
+    <!--댓글 무한 스크롤 쿼리-->
+    <select id="selectByBoardIdWithSlice" resultType="FreeCommentListDTO">
+        SELECT RNUM, FREE_COMMENT_ID, FREE_BOARD_ID, CONTENT, REG_DATE, MOD_DATE, MEMBER_ID, LOGIN_ID
+        FROM (
+             SELECT ROWNUM AS RNUM, FREE_COMMENT_ID, FREE_BOARD_ID, CONTENT, REG_DATE, MOD_DATE,
+                    MEMBER_ID, LOGIN_ID
+             FROM (
+                      SELECT FC.FREE_COMMENT_ID, FC.FREE_BOARD_ID, FC.CONTENT, FC.REG_DATE, FC.MOD_DATE,
+                             M.MEMBER_ID, M.LOGIN_ID
+                      FROM TBL_FREE_COMMENT FC
+                               JOIN TBL_MEMBER M ON FC.MEMBER_ID = M.MEMBER_ID
+                      WHERE FC.FREE_BOARD_ID = #{freeBoardId}
+                      ORDER BY FC.FREE_COMMENT_ID DESC
+                  )
+            <![CDATA[
+             WHERE ROWNUM <= #{page.page} * #{page.size} + 1
+            ]]>
+        )
+        WHERE RNUM > (#{page.page} - 1) * #{page.size}
+    </select>
+</mapper>
+

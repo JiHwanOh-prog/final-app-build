@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/footer.css}">
+    <link rel="stylesheet" th:href="@{../../css/fragments/header.css}" />
+  </head>
+  <body>
+    <header class="header" th:fragment="header">
+      <div class="header__wrapper">
+        <h1 class="header__logo">
+          <a th:href="@{/}">COMMUNITY</a>
+        </h1>
+
+        <nav class="header__nav">
+          <ul class="header__menu">
+            <li class="header__menu-item">
+              <a th:href="@{/board/free/list}">자유게시판</a>
+            </li>
+            <li class="header__menu-item">
+              <a th:href="@{/board/qna/list}">Q&A</a>
+            </li>
+            <li class="header__menu-item">
+              <a href="#">갤러리</a>
+            </li>
+            <li class="header__menu-item">
+              <a href="#">이벤트</a>
+            </li>
+            <li class="header__menu-item">
+              <a href="#">공지사항</a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="header__user" th:if="${session.memberId == null}">
+          <a th:href="@{/member/login}" class="header__login-btn">로그인</a>
+          <a th:href="@{/member/join}" class="header__join-btn">회원가입</a>
+        </div>
+
+        <!-- 로그인 후 상태 (타임리프 적용 전까지 주석처리) -->
+        <div class="header__user" th:unless="${session.memberId == null}">
+            <span class="header__username" th:text="${session.loginId} + '님'">홍길동님</span>
+            <a href="#" class="header__mypage-btn">마이페이지</a>
+            <a th:href="@{/member/logout}" class="header__logout-btn">로그아웃</a>
+        </div>
+      </div>
+    </header>
+  </body>
+</html>

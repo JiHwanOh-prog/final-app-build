@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>게시글 제목 - 자유게시판</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/board/free/detail.css}" />
+    <!-- 항상 모듈을 사용할때는 타입을 module로 설정해줘야 인식함 -->
+    <script defer type="module" th:src="@{/js/board/free/detail.js}"></script>
+  </head>
+  <body>
+  <header class="header" th:include="~{fragments/header::header}">
+    <!-- header.html 내용 -->
+  </header>
+
+    <main>
+      <div class="container">
+        <div class="detail-wrapper">
+          <!-- 게시글 영역 -->
+          <!---->
+          <article class="post-article" th:object="${board}">
+<!--            <input type="hidden" name="freeBoardId" th:value="*{freeBoardId}" />-->
+            <div class="post-header">
+              <h2 class="post-title" th:text="*{title}">안녕하세요! 가입 인사드립니다.</h2>
+              <div class="post-info">
+                <span class="writer" th:text="*{loginId}">user123</span>
+                <span class="date" th:text="*{regDate}">2024-01-10 14:30</span>
+                <span class="view-count" th:text="'조회 ' + *{viewCount}">조회 42</span>
+                <span class="like-count" th:text="'좋아요 ' + *{likeCount}">좋아요 5</span>
+              </div>
+            </div>
+
+            <div class="post-content">
+              <p th:utext="*{content}">게시글 내용이 들어갑니다.</p>
+              <hr>
+              <div class="post-image" th:if="*{freeFileId != null}">
+                <img th:src="@{'/upload/free/' + *{filePath} + '/' + *{uuid} + *{extension}}" alt="게시글 이미지" />
+              </div>
+            </div>
+
+            <div class="like-area">
+              <button type="button" class="like-btn">
+                <span class="like-icon">♥</span>
+                <span class="like-text">좋아요</span>
+                <span class="like-count" th:text="*{likeCount}">5</span>
+              </button>
+            </div>
+
+            <div class="btn-group">
+              <div class="left-area">
+                <a th:href="@{/board/free/list}" class="list-btn">목록</a>
+              </div>
+              <!--세션에서 memberId와 글 작성자의 memberID가 동일한 경우 삭제 버튼 활성화-->
+              <div class="right-area" th:if="${session.memberId == board.memberId}">
+                <a th:href="@{/board/free/modify(freeBoardId=*{freeBoardId})}" class="edit-btn">수정</a>
+                <button type="button" class="delete-btn" th:data-board-id="${board.freeBoardId}">삭제</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- 댓글 영역 -->
+          <section class="comment-section">
+            <h3 class="comment-title">댓글 <span class="comment-count">3</span></h3>
+
+            <!-- 댓글 작성 폼 -->
+            <form class="comment-form" th:if="${session.memberId} != null">
+              <textarea class="comment-input" placeholder="댓글을 입력하세요" required></textarea>
+              <button type="submit" class="submit-btn">등록</button>
+            </form>
+
+            <!-- 댓글 목록 -->
+            <ul class="comment-list">
+<!--              <li class="comment-item">-->
+<!--                <article class="comment-article">-->
+<!--                  <div class="comment-info">-->
+<!--                    <span class="writer">spring123</span>-->
+<!--                    <span class="date">2024-01-10 15:20</span>-->
+<!--                  </div>-->
+<!--                  <p class="comment-text">환영합니다!</p>-->
+<!--                  <div class="comment-actions">-->
+<!--                    <button type="button" class="edit-comment-btn">수정</button>-->
+<!--                    <button type="button" class="delete-comment-btn">삭제</button>-->
+<!--                  </div>-->
+<!--                </article>-->
+<!--              </li>-->
+            </ul>
+          </section>
+        </div>
+      </div>
+    </main>
+
+  <footer class="footer" th:include="~{fragments/footer::footer}">
+    <!-- footer.html 내용 -->
+  </footer>
+
+  <script th:inline="javascript">
+    const freeBoardId = [[${board.freeBoardId}]];
+    const loginMemberId = [[${session.memberId}]];
+  </script>
+  </body>
+</html>

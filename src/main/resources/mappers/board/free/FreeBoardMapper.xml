@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.finalapp.mapper.board.free.FreeBoardMapper">
+    <insert id="insertFreeBoard" parameterType="FreeBoardWriteDTO">
+        <selectKey resultType="long" keyProperty="freeBoardId" order="BEFORE">
+            SELECT SEQ_FREE_BOARD.nextval FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_FREE_BOARD (FREE_BOARD_ID, MEMBER_ID, TITLE, CONTENT)
+        VALUES (#{freeBoardId}, #{memberId}, #{title}, #{content})
+    </insert>
+
+    <select id="selectById" parameterType="long" resultType="FreeBoardDetailDTO">
+        SELECT FB.FREE_BOARD_ID, FB.TITLE, FB.CONTENT, FB.VIEW_COUNT, FB.REG_DATE, FB.MOD_DATE,
+               M.MEMBER_ID, M.LOGIN_ID,
+               (SELECT COUNT(*) FROM TBL_FREE_LIKE FL WHERE FB.FREE_BOARD_ID = FL.FREE_BOARD_ID) AS LIKE_COUNT,
+               FF.FREE_FILE_ID, FF.ORIGINAL_FILENAME, FF.UUID, FF.FILE_PATH, FF.EXTENSION
+        FROM TBL_FREE_BOARD FB
+            JOIN TBL_MEMBER M ON FB.MEMBER_ID = M.MEMBER_ID
+            LEFT JOIN TBL_FREE_FILE FF ON FB.FREE_BOARD_ID = FF.FREE_BOARD_ID
+        WHERE FB.FREE_BOARD_ID = #{freeBoardId}
+    </select>
+
+    <update id="updateViewCount" parameterType="Long">
+            UPDATE TBL_FREE_BOARD
+            SET VIEW_COUNT = VIEW_COUNT + 1
+            WHERE FREE_BOARD_ID = #{freeBoard}
+    </update>
+
+    <select id="selectAllFreeBoards" resultType="FreeBoardListDTO">
+        SELECT FB.FREE_BOARD_ID, FB.TITLE, FB.VIEW_COUNT, FB.REG_DATE, FB.MOD_DATE,
+               M.MEMBER_ID, M.LOGIN_ID,
+               (SELECT COUNT(*) FROM TBL_FREE_COMMENT FC WHERE FC.FREE_BOARD_ID = FB.FREE_BOARD_ID) AS COMMENT_COUNT,
+               (SELECT COUNT(*) FROM TBL_FREE_LIKE FL WHERE FL.FREE_BOARD_ID = FB.FREE_BOARD_ID) AS LIKE_COUNT,
+               FF.FREE_FILE_ID, FF.ORIGINAL_FILENAME, FF.UUID, FF.FILE_PATH, FF.EXTENSION
+        FROM TBL_FREE_BOARD FB
+                 JOIN TBL_MEMBER M ON FB.MEMBER_ID = M.MEMBER_ID
+                 LEFT JOIN TBL_FREE_FILE FF ON FB.FREE_BOARD_ID = FF.FREE_BOARD_ID
+        ORDER BY FREE_BOARD_ID DESC
+    </select>
+
+    <update id="updateFreeBoard" parameterType="FreeBoardModifyDTO">
+        UPDATE TBL_FREE_BOARD
+        SET TITLE = #{title}, CONTENT = #{content}
+        WHERE FREE_BOARD_ID = #{freeBoardId}
+    </update>
+
+    <delete id="deleteFreeBoard" parameterType="long">
+        DELETE FROM TBL_FREE_BOARD
+        WHERE FREE_BOARD_ID = #{freeBoardId}
+    </delete>
+
+    <select id="selectBySearchCondition" resultType="FreeBoardListDTO">
+        SELECT FB.FREE_BOARD_ID, FB.TITLE, FB.VIEW_COUNT, FB.REG_DATE, FB.MOD_DATE,
+               M.MEMBER_ID, M.LOGIN_ID,
+               (SELECT COUNT(*) FROM TBL_FREE_COMMENT FC WHERE FC.FREE_BOARD_ID = FB.FREE_BOARD_ID) AS COMMENT_COUNT,
+               (SELECT COUNT(*) FROM TBL_FREE_LIKE FL WHERE FL.FREE_BOARD_ID = FB.FREE_BOARD_ID) AS LIKE_COUNT,
+               FF.FREE_FILE_ID, FF.ORIGINAL_FILENAME, FF.UUID, FF.FILE_PATH, FF.EXTENSION
+        FROM TBL_FREE_BOARD FB
+                 JOIN TBL_MEMBER M ON FB.MEMBER_ID = M.MEMBER_ID
+                 LEFT JOIN TBL_FREE_FILE FF ON FB.FREE_BOARD_ID = FF.FREE_BOARD_ID
+        <where>
+            <choose>
+                <when test="'loginId'.equals(searchType)">
+                    M.LOGIN_ID LIKE '%' || #{keyword} || '%'
+                </when>
+                <when test="'title'.equals(searchType)">
+                    FB.TITLE LIKE '%' || #{keyword} || '%'
+                </when>
+                <when test="'content'.equals(searchType)">
+                    FB.CONTENT LIKE '%' || #{keyword} || '%'
+                </when>
+            </choose>
+        </where>
+        ORDER BY FREE_BOARD_ID DESC
+    </select>
+
+
+    <select id="selectBySearchCondWithPage" resultType="FreeBoardListDTO">
+        SELECT RNUM, FREE_BOARD_ID, TITLE, VIEW_COUNT, REG_DATE, MOD_DATE,
+               MEMBER_ID, LOGIN_ID,
+               COMMENT_COUNT, LIKE_COUNT,
+               FREE_FILE_ID, ORIGINAL_FILENAME, UUID, FILE_PATH, EXTENSION
+        FROM (
+            SELECT ROWNUM AS RNUM, FREE_BOARD_ID, TITLE, VIEW_COUNT, REG_DATE, MOD_DATE,
+            MEMBER_ID, LOGIN_ID,
+            COMMENT_COUNT, LIKE_COUNT,
+            FREE_FILE_ID, ORIGINAL_FILENAME, UUID, FILE_PATH, EXTENSION
+        FROM (
+            SELECT FB.FREE_BOARD_ID, FB.TITLE, FB.VIEW_COUNT, FB.REG_DATE, FB.MOD_DATE,
+                M.MEMBER_ID, M.LOGIN_ID,
+                (SELECT COUNT(*) FROM TBL_FREE_COMMENT FC WHERE FC.FREE_BOARD_ID = FB.FREE_BOARD_ID) AS COMMENT_COUNT,
+                (SELECT COUNT(*) FROM TBL_FREE_LIKE FL WHERE FL.FREE_BOARD_ID = FB.FREE_BOARD_ID) AS LIKE_COUNT,
+                FF.FREE_FILE_ID, FF.ORIGINAL_FILENAME, FF.UUID, FF.FILE_PATH, FF.EXTENSION
+        FROM TBL_FREE_BOARD FB
+            JOIN TBL_MEMBER M ON FB.MEMBER_ID = M.MEMBER_ID
+            LEFT JOIN TBL_FREE_FILE FF ON FB.FREE_BOARD_ID = FF.FREE_BOARD_ID
+            <where>
+                <choose>
+                    <when test="'loginId'.equals(cond.searchType)">
+                        M.LOGIN_ID LIKE '%' || #{cond.keyword} || '%'
+                    </when>
+                    <when test="'title'.equals(cond.searchType)">
+                        FB.TITLE LIKE '%' || #{cond.keyword} || '%'
+                    </when>
+                    <when test="'content'.equals(cond.searchType)">
+                        FB.CONTENT LIKE '%' || #{cond.keyword} || '%'
+                    </when>
+                </choose>
+            </where>
+        ORDER BY FREE_BOARD_ID DESC
+            )
+            <![CDATA[
+            WHERE ROWNUM <= #{page.page} * #{page.size}
+            ]]>
+        )
+        WHERE RNUM > (#{page.page} - 1) * #{page.size}
+    </select>
+
+
+    <select id="countBySearchCondition" resultType="_int">
+        SELECT COUNT(*)
+        FROM TBL_FREE_BOARD FB
+            JOIN TBL_MEMBER M ON FB.MEMBER_ID = M.MEMBER_ID
+        <where>
+            <choose>
+                <when test="'loginId'.equals(searchType)">
+                    M.LOGIN_ID LIKE '%' || #{keyword} || '%'
+                </when>
+                <when test="'title'.equals(searchType)">
+                    FB.TITLE LIKE '%' || #{keyword} || '%'
+                </when>
+                <when test="'content'.equals(searchType)">
+                    FB.CONTENT LIKE '%' || #{keyword} || '%'
+                </when>
+            </choose>
+        </where>
+    </select>
+</mapper>

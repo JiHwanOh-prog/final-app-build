@@ -1,0 +1,231 @@
+/* Board Section */
+.board-section {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.board-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+/* Search Section */
+.search-section {
+  margin-bottom: 20px;
+}
+
+.search-form {
+  display: flex;
+  gap: 10px;
+}
+
+.search-type {
+  width: 100px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.search-btn {
+  padding: 8px 16px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-btn:hover {
+  background: #0056b3;
+}
+
+/* List Section */
+.board-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
+.board-table th,
+.board-table td {
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.board-table th {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+
+.board-table .no {
+  width: 8%;
+}
+.board-table .title {
+  width: 50%;
+  text-align: left;
+}
+.board-table .writer {
+  width: 15%;
+}
+.board-table .date {
+  width: 15%;
+}
+.board-table .status {
+  width: 12%;
+}
+
+.board-table a {
+  color: #333;
+  text-decoration: none;
+}
+
+.board-table a:hover {
+  color: #007bff;
+}
+
+.comment-count {
+  color: #007bff;
+  font-size: 13px;
+  margin-left: 5px;
+}
+
+/* Status Badge */
+.status-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-badge.waiting {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.completed {
+  background: #d4edda;
+  color: #155724;
+}
+
+/* Pagination Section */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin: 30px 0;
+}
+
+.page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  color: #666;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.page-btn:hover {
+  border-color: #999;
+  color: #333;
+}
+
+.page-btn.active {
+  background: #007bff;
+  border-color: #007bff;
+  color: #fff;
+}
+
+.page-btn.prev,
+.page-btn.next {
+  padding: 0 12px;
+}
+
+/* Button Area */
+.btn-area {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.write-btn {
+  padding: 8px 24px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.write-btn:hover {
+  background: #0056b3;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .board-section {
+    padding: 20px;
+  }
+
+  .search-form {
+    flex-direction: column;
+  }
+
+  .search-type {
+    width: 100%;
+  }
+
+  .board-table th.writer,
+  .board-table td.writer,
+  .board-table th.date,
+  .board-table td.date {
+    display: none;
+  }
+
+  .board-table .no {
+    width: 15%;
+  }
+  .board-table .title {
+    width: 60%;
+  }
+  .board-table .status {
+    width: 25%;
+  }
+}
+
+/* Secret Post Style */
+.secret-icon {
+  display: inline-block;
+  margin-right: 5px;
+  color: #666;
+}
+
+/* 비밀글인 경우 스타일 */
+.board-table tr.secret {
+  background-color: #f8f9fa;
+}
+
+.board-table .title.secret a {
+  color: #666;
+}
+
+.board-table .title.secret a:hover {
+  color: #333;
+}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QnA 게시판</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/board/qna/list.css}" />
+    <script defer th:src="@{/js/board/qna/list.js}"></script>
+  </head>
+  <body>
+  <header class="header" th:include="~{fragments/header::header}">
+    <!-- header.html 내용 -->
+  </header>
+
+    <main>
+      <div class="container">
+        <section class="board-section">
+          <h2 class="board-title">QnA 게시판</h2>
+
+          <!-- 검색 영역 -->
+          <section class="search-section">
+            <form class="search-form">
+              <select name="type" class="search-type">
+                <option value="title">제목</option>
+                <option value="content">내용</option>
+                <option value="writer">작성자</option>
+              </select>
+              <input type="text" name="keyword" class="search-input" placeholder="검색어를 입력하세요" />
+              <button type="submit" class="search-btn">검색</button>
+            </form>
+          </section>
+
+          <!-- 게시글 목록 샘플 -->
+          <section class="list-section">
+            <table class="board-table">
+              <thead>
+                <tr>
+                  <th class="no">번호</th>
+                  <th class="title">제목</th>
+                  <th class="writer">작성자</th>
+                  <th class="date">작성일</th>
+                  <th class="status">상태</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="no">5</td>
+                  <td class="title">
+                    <a href="/qna/detail/5">로그인이 안 되는 문제가 있습니다.</a>
+                    <span class="comment-count">[2]</span>
+                  </td>
+                  <td class="writer">user123</td>
+                  <td class="date">2024-01-10</td>
+                  <td class="status">
+                    <span class="status-badge waiting">답변대기</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="no">4</td>
+                  <td class="title">
+                    <a href="/qna/detail/4">비밀번호 재설정은 어떻게 하나요?</a>
+                    <span class="comment-count">[1]</span>
+                  </td>
+                  <td class="writer">spring123</td>
+                  <td class="date">2024-01-09</td>
+                  <td class="status">
+                    <span class="status-badge completed">답변완료</span>
+                  </td>
+                </tr>
+                <tr class="secret">
+                  <td class="no">3</td>
+                  <td class="title secret">
+                    <a href="/qna/detail/3">
+                      <span class="secret-icon">🔒</span>
+                      비밀글입니다.
+                    </a>
+                    <span class="comment-count">[2]</span>
+                  </td>
+                  <td class="writer">user123</td>
+                  <td class="date">2024-01-10</td>
+                  <td class="status">
+                    <span class="status-badge waiting">답변대기</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- 페이징 -->
+          <section class="pagination-section">
+            <div class="pagination">
+              <a href="#" class="page-btn prev">이전</a>
+              <a href="#" class="page-btn active">1</a>
+              <a href="#" class="page-btn">2</a>
+              <a href="#" class="page-btn">3</a>
+              <a href="#" class="page-btn">4</a>
+              <a href="#" class="page-btn">5</a>
+              <a href="#" class="page-btn next">다음</a>
+            </div>
+          </section>
+
+          <!-- 글쓰기 버튼 -->
+          <div class="btn-area">
+            <a href="/qna/write" class="write-btn">글쓰기</a>
+          </div>
+        </section>
+      </div>
+    </main>
+
+  <footer class="footer" th:include="~{fragments/footer::footer}">
+    <!-- footer.html 내용 -->
+  </footer>
+  </body>
+</html>

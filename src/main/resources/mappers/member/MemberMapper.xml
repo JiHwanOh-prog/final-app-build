@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.finalapp.mapper.member.MemberMapper">
+    <insert id="insertMember" parameterType="MemberJoinDTO">
+        <selectKey resultType="long" order="BEFORE" keyProperty="memberId">
+            SELECT SEQ_MEMBER.nextval FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_MEMBER(MEMBER_ID, LOGIN_ID, PASSWORD, NAME, EMAIL, GENDER, PHONE, ZIP_CODE, ADDRESS, ADDRESS_DETAIL)
+        VALUES (#{memberId}, #{loginId}, #{password}, #{name}, #{email}, #{gender}, #{phone}, #{zipCode}, #{address}, #{addressDetail})
+    </insert>
+
+    <select id="selectLoginInfo" parameterType="MemberLoginDTO" resultType="MemberSessionDTO">
+        SELECT MEMBER_ID, LOGIN_ID, ROLE
+        FROM TBL_MEMBER
+        WHERE LOGIN_ID =#{loginId} AND PASSWORD = #{password}
+    </select>
+
+    <select id="countByLoginId" parameterType="string" resultType="_int">
+        SELECT COUNT(*)
+        FROM TBL_MEMBER
+        WHERE LOGIN_ID = #{loginId}
+    </select>
+</mapper>
